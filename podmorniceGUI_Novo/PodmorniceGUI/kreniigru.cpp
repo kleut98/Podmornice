@@ -1,4 +1,7 @@
 #include "kreniigru.h"
+//#define MY_TST_MAC_KRENIIGRU
+
+#ifndef MY_TST_MAC_KRENIIGRU
 #include "ui_kreniigru.h"
 
 #include "podmornicegui.h"
@@ -8,6 +11,10 @@
 
 QPushButton *dugmici[100][100];
 
+#else
+
+#include<iostream>
+#endif
 
 Podmornica::Podmornica(char d, int lgth, QVector<int> r, QVector<int> c, int hit, QString nme)
 {
@@ -63,13 +70,19 @@ Podmornica::Podmornica(){};
 
     bool postaviPodmornicu(int matrica[][10],int duzinaBroda,int ime,QVector<Podmornica> &listaBrodova)
     {
+#ifndef MY_UKLONIRAND
         srand(time(0)); // utice na fju rand tako sto je pravi jos vise random
+#endif
         int vrsta=0;
         int kolona = 0;
         char smer ='v';
         bool neuspesnoPostavljeno=true;
         int cs=0;
+#ifndef MY_UKLONIRAND
         smer = uzmiPravac(rand()%10);
+#else
+        smer=uzmiPravac(2);
+#endif
         izaberiVrsteiKolone(kolona,vrsta,duzinaBroda,smer);
 
 
@@ -84,7 +97,11 @@ Podmornica::Podmornica(){};
                             // genrisemo opet random kolonu vrstu i smer i ajmo opet
 
                 {
+#ifndef  MY_UKLONIRAND
                     smer = uzmiPravac(rand()%10);
+#else
+                    smer=uzmiPravac(2);
+#endif
                     izaberiVrsteiKolone(kolona,vrsta,duzinaBroda,smer);
                     cs=0;
                     continue;
@@ -106,7 +123,11 @@ Podmornica::Podmornica(){};
                             // genrisemo opet random kolonu vrstu i smer i ajmo opet
 
                 {
+#ifndef MY_UKLONIRAND
                     smer = uzmiPravac(rand()%10);
+#else
+                    smer = uzmiPravac(8);
+#endif
                     izaberiVrsteiKolone(kolona,vrsta,duzinaBroda,smer);
                     cs=0;
                     continue;
@@ -451,7 +472,7 @@ Podmornica::Podmornica(){};
 
 
 
-
+#ifndef MY_TST_MAC_KRENIIGRU
 
 KreniIgru::KreniIgru(QWidget *parent) :
     QDialog(parent),
@@ -633,7 +654,135 @@ void KreniIgru::oboj(){
 
 }
 
+#else
 
+    int igraj(int v,int k,int matrica[][10],int *pokusaji,int *potopljenePodmornice,QVector<Podmornica> &listaPodmornica){
+
+
+        int vrsta = v;
+        int kolona = k;
+
+        int element = matrica[vrsta][kolona];
+
+
+        switch(element)
+        {
+                case 0:
+                    //promasaj
+                    (*pokusaji)++;
+                    if (*pokusaji>=61)
+                        return -1;
+                        //std::cout << "Izgubio si."<< std::endl;
+
+
+                 break;
+
+                 case 1:
+                    (*pokusaji)++;
+                    if (*pokusaji>=61)
+                        return -1;
+                        //std::cout << "Izgubio si." << std::endl;
+                    else{
+                        std::cout << "Pogodili ste podmornicu dužine 1." << std::endl;
+
+                        listaPodmornica[0].setPogodak();
+                        listaPodmornica[0].proveriPotop(Br1p);
+                       // podmornica duzine 1 je svakako odmahpogodjena ali nek stoji
+                        (*potopljenePodmornice)++;
+
+
+                        if(*potopljenePodmornice==5)
+                            return 1;
+                            //std::cout << "Potopljene sve podmornice" << std::endl;
+                    }
+
+                 break;
+
+            case 2:
+                (*pokusaji)++;
+                if (*pokusaji>=61)
+                    return -1;
+                    //std::cout << "Izgubio si." << std::endl;
+                else{
+                    std::cout << "Pogodili ste podmornicu dužine 2." << std::endl;
+
+                    listaPodmornica[1].setPogodak();
+                    if(listaPodmornica[1].proveriPotop(Br2p)==9)
+                       (*potopljenePodmornice)++;
+
+
+                    if(*potopljenePodmornice==5)
+                        return 1;
+                        //std::cout << "Potopljene sve podmornice" << std::endl;
+                }
+
+         break;
+
+        case 3:
+            (*pokusaji)++;
+            if (*pokusaji>=61)
+                return -1;
+               //std::cout << "Izgubio si." << std::endl;
+            else{
+                std::cout << "Pogodili ste podmornicu dužine 3." << std::endl;
+
+                listaPodmornica[2].setPogodak();
+                if(listaPodmornica[2].proveriPotop(Br3p)==9)
+                               (*potopljenePodmornice)++;
+
+
+               if(*potopljenePodmornice==5)
+                   return 1;
+                 //std::cout << "Potopljene sve podmornice" << std::endl;
+             }
+        break;
+
+        case 4:
+            (*pokusaji)++;
+            if (*pokusaji>=61)
+                return -1;
+                //std::cout << "Izgubio si." << std::endl;
+            else{
+                std::cout << "Pogodili ste podmornicu dužine 4." << std::endl;
+
+                listaPodmornica[3].setPogodak();
+                if(listaPodmornica[3].proveriPotop(Br4p)==9)
+                               (*potopljenePodmornice)++;
+
+
+               if(*potopljenePodmornice==5)
+                   return 1;
+                 //std::cout << "Potopljene sve podmornice" << std::endl;
+             }
+        break;
+
+        case 5:
+            (*pokusaji)++;
+            if (*pokusaji>=61)
+                return -1;
+               //std::cout << "Izgubio si." << std::endl;
+            else{
+                std::cout << "Pogodili ste podmornicu dužine 5." << std::endl;
+
+                listaPodmornica[4].setPogodak();
+                if(listaPodmornica[4].proveriPotop(Br4p)==9)
+                               (*potopljenePodmornice)++;
+
+
+               if(*potopljenePodmornice==5)
+                    return 1;
+                   //std::cout << "Potopljene sve podmornice" << std::endl;
+             }
+        break;
+
+
+        }
+    return 0;
+    }
+
+
+
+#endif
 
 
 

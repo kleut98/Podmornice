@@ -48,3 +48,4 @@ void PodmorniceGUI::on_postavi_clicked()
 
 
 }
+

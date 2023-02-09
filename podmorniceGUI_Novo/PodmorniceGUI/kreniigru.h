@@ -1,12 +1,19 @@
 #ifndef KRENIIGRU_H
 #define KRENIIGRU_H
 
+//#define MY_MAC_KIH
+
+#ifndef MY_MAC_KIH
 #include <QDialog>
+
+#else
+#include <QVector>
+#endif
 
 extern int matrica[10][10];
 extern int potopljenePodmornice;
 extern int pokusaji;
-
+#ifndef MY_MAC_KIH
 namespace Ui {
 class KreniIgru;
 }
@@ -26,7 +33,7 @@ private slots:
 private:
     Ui::KreniIgru *ui;
 };
-
+#endif
 
 class Podmornica
 {
@@ -77,8 +84,9 @@ void izaberiVrsteiKolone(int& kolona,int& vrsta,int duzinaBorda,char smer);
 char uzmiPravac(int p);
 void izmeniTablu(int matrica[][10],int kolona,int vrsta,int duzinaPodmornice,int smer);
 int izmeniPodmornicu(int kolona,int vrsta,int smer,QVector<Podmornica> &listaPodmornica,int ime);
-
-
+#ifdef MY_MAC_KIH
+int igraj(int vrsta,int kolona,int matrica[][10],int *pokusaji,int *potopljenePodmornice,QVector<Podmornica> &listaPodmornica);
+#endif
 
 
 

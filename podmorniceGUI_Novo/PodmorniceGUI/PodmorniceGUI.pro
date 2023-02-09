@@ -6,6 +6,8 @@
 
 QT       += core gui
 
+DEFINES+="MY_TST_MAC=1" "MY_MAC_KIH=1" "MY_TST_MAC_KRENIIGRU=1"
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = PodmorniceGUI
@@ -22,24 +24,25 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+QMAKE_CXXFLAGS += -g
 
 SOURCES += \
         main.cpp \
-        podmornicegui.cpp \
-    kreniigru.cpp \
-    pobeda.cpp \
-    gubitak.cpp
+        #podmornicegui.cpp \
+    kreniigru.cpp
+    #pobeda.cpp \
+    #gubitak.cpp
 
 HEADERS += \
-        podmornicegui.h \
+        #podmornicegui.h \
     kreniigru.h \
-    pobeda.h \
-    gubitak.h
+    #pobeda.h \
+    #gubitak.h
 
-FORMS += \
-        podmornicegui.ui \
-    kreniigru.ui \
-    pobeda.ui \
-    gubitak.ui
+#FORMS += \
+#        podmornicegui.ui \
+#    kreniigru.ui \
+#    pobeda.ui \
+#    gubitak.ui
 
 DISTFILES +=
